@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { supabase } from '../utils/supabaseClient';
-import { ColumnContext } from './columnContext';
+import { ColumnContext } from './ColumnProvider';
 import { MainContext } from './MainProvider';
 import { AuthContext } from './AuthContext';
 

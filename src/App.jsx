@@ -7,7 +7,7 @@ import TaskDetails from './components/TaskDetails';
 import DeleteModal from './components/DeleteModal';
 import Loading from './components/Loading';
 import { BoardContext } from './context/BoardContext';
-import { ColumnContext } from './context/columnContext';
+import { ColumnContext } from './context/ColumnProvider';
 import { MainContext } from './context/MainProvider';
 import { TaskContext } from './context/TaskContext';
 import { AuthContext } from './context/AuthContext';

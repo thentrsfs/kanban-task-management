@@ -1,5 +1,5 @@
 import { BoardProvider } from './BoardContext';
-import { ColumnProvider } from './columnContext';
+import { ColumnProvider } from './ColumnProvider';
 import { TaskProvider } from './TaskContext';
 import { MainProvider } from './MainProvider';
 import { AuthProvider } from './AuthContext';
