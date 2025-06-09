@@ -130,6 +130,7 @@ function App() {
 		setLoading,
 		setUser,
 		logout,
+		authMessage,
 	} = useContext(AuthContext);
 
 	/* Theme handling */
@@ -162,6 +163,7 @@ function App() {
 						authError={authError}
 						setAuthError={setAuthError}
 						handleAuth={handleAuth}
+						authMessage={authMessage}
 					/>
 				</div>
 			);

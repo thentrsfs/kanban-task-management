@@ -153,12 +153,12 @@ const Navbar = ({
 						{optionsOpen && (
 							<div className='absolute top-10 right-0 flex flex-col body-l items-start gap-3 p-4 bg-white dark:bg-black-light border-gray-border rounded-lg border-1 z-50 w-30'>
 								<button
-									className='text-gray-medium cursor-pointer'
+									className='text-gray-medium cursor-pointer hover:text-black dark:hover:text-white transition-all duration-300'
 									onClick={handleEditBoard}>
 									Edit Board
 								</button>
 								<button
-									className='text-red cursor-pointer'
+									className='text-red cursor-pointer hover:text-[hsl(0,78%,53%)] transition-all duration-300'
 									onClick={() => {
 										openDeleteModal();
 									}}>

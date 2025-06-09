@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
 	const [password, setPassword] = useState('');
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [authError, setAuthError] = useState('');
+	const [authMessage, setAuthMessage] = useState('');
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 
@@ -28,7 +29,10 @@ export const AuthProvider = ({ children }) => {
 		setLoading(true);
 
 		const { error } = isSignUp
-			? await supabase.auth.signUp({ email, password })
+			? await supabase.auth.signUp(
+					{ email, password },
+					{ options: { disableEmailConfirmation: true } }
+			  )
 			: await supabase.auth.signInWithPassword({ email, password });
 
 		if (error) setAuthError(error.message);

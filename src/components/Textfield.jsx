@@ -17,7 +17,6 @@ const Textfield = ({
 			onChange={handleInputChange}
 			placeholder={placeholder}
 			onKeyDown={onKeyDown}
-			required
 			className={` ${className} border-1  hover:border-purple-main outline-0 transition-all duration-300 rounded-sm body-l placeholder:text-black-25 placeholder:normal-case dark:text-white dark:placeholder:text-white dark:placeholder:opacity-25 `}
 		/>
 	);

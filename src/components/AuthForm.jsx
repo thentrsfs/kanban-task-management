@@ -12,6 +12,7 @@ const AuthForm = ({
 	isSignUp,
 	setIsSignUp,
 	loginAsGuest,
+	authMessage,
 }) => {
 	return (
 		<form
@@ -65,7 +66,7 @@ const AuthForm = ({
 						onClick={() => setIsSignUp((prev) => !prev)}>
 						{isSignUp ? 'Have an account? Log in' : 'Need an account? Sign up'}
 					</button>
-
+					{authMessage && <p className='text-white body-l'>{authMessage}</p>}
 					{authError && <p className='text-red body-l'>{authError}</p>}
 				</div>
 				<div className='bg-gray-light dark:bg-black-light px-14 py-2 rounded-md'>
