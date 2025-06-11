@@ -73,7 +73,7 @@ const TaskModal = ({
 							taskErrors.length > 0
 								? 'border-red hover:border-red'
 								: 'border-gray-border'
-						} py-2 px-4 capitalize`}
+						} py-2 px-4`}
 						value={taskTitle}
 						handleInputChange={handleTaskInputChange}
 					/>
