@@ -20,7 +20,7 @@ const SortableItem = (props) => {
 				onClick={() => {
 					props.openTaskDetails(props.task);
 				}}>
-				<h1 className='heading-m text-black dark:text-white group-hover:text-purple-main transition-all duration-300 break-all'>
+				<h1 className='heading-m text-black dark:text-white group-hover:text-purple-main transition-all duration-300 break-normal'>
 					{props.task.title}
 				</h1>
 				<p className='body-m text-gray-medium '>
