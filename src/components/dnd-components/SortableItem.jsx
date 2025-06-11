@@ -16,11 +16,11 @@ const SortableItem = (props) => {
 			{...attributes}
 			{...listeners}>
 			<div
-				className='bg-white touch-none dark:bg-gray-dark group w-[280px] min-h-[88px] rounded-lg shadow-md flex flex-col gap-2 justify-center px-4 py-2 cursor-pointer'
+				className='bg-white touch-none dark:bg-gray-dark group w-[280px] min-h-[88px] rounded-lg shadow-md flex flex-col gap-2 justify-center px-4 cursor-pointer py-3'
 				onClick={() => {
 					props.openTaskDetails(props.task);
 				}}>
-				<h1 className='heading-m text-black dark:text-white group-hover:text-purple-main transition-all duration-300'>
+				<h1 className='heading-m text-black dark:text-white group-hover:text-purple-main transition-all duration-300 break-all'>
 					{props.task.title}
 				</h1>
 				<p className='body-m text-gray-medium '>
