@@ -71,7 +71,7 @@ const TaskDetails = ({
 
 			<div className=' bg-white dark:bg-gray-dark w-[90%] md:w-[65%] lg:w-[30%] z-11 rounded-md p-5 flex flex-col gap-4'>
 				<div className='flex relative justify-between items-center'>
-					<h1 className='heading-l text-black dark:text-white flex-1 pr-5 break-all'>
+					<h1 className='heading-l text-black dark:text-white flex-1 pr-5 break-normal'>
 						{selectedTask?.title}
 					</h1>
 					<button
@@ -104,7 +104,7 @@ const TaskDetails = ({
 						</div>
 					)}
 				</div>
-				<p className='body-l text-gray-medium pr-5 break-all'>
+				<p className='body-l text-gray-medium pr-5 break-normal'>
 					{' '}
 					{selectedTask?.description}
 				</p>

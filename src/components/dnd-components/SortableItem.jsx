@@ -16,7 +16,7 @@ const SortableItem = (props) => {
 			{...attributes}
 			{...listeners}>
 			<div
-				className='bg-white touch-none dark:bg-gray-dark group w-[280px] min-h-[88px] rounded-lg shadow-md flex flex-col gap-2 justify-center px-4 cursor-pointer py-3'
+				className='bg-white touch-none dark:bg-gray-dark group w-[280px] min-h-[88px] rounded-lg shadow-md flex flex-col gap-2 justify-center px-4 cursor-pointer py-4'
 				onClick={() => {
 					props.openTaskDetails(props.task);
 				}}>
