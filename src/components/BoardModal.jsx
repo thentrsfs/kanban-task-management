@@ -1,7 +1,7 @@
 import TextField from './Textfield';
 import Button from './Button';
 import RemoveIcon from './svg/RemoveIcon';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 
 const BoardModal = ({
 	setIsEdit,

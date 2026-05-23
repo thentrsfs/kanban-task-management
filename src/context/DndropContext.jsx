@@ -26,109 +26,155 @@ export const DndropProvider = ({ children }) => {
 		}),
 		useSensor(KeyboardSensor, {
 			coordinateGetter: sortableKeyboardCoordinates,
-		})
+		}),
 	);
 
 	/* Handle drag and drop event */
 	async function handleDragEnd(event) {
-		const { active, over } = event;
-		if (!over || !over.id) return;
+		const previousState = structuredClone(tasksByColumn);
 
-		const activeId = String(active.id);
-		const overId = String(over.id);
+		try {
+			const { active, over } = event;
 
-		// Find source column
-		let sourceColumnId = null;
-		for (const colId in tasksByColumn) {
-			if (tasksByColumn[colId].some((task) => String(task.id) === activeId)) {
-				sourceColumnId = colId;
-				break;
-			}
-		}
+			if (!over || !over.id) return;
 
-		// Find target column
-		let targetColumnId = null;
-		if (overId.startsWith('column-')) {
-			targetColumnId = overId.replace('column-', '');
-		} else {
+			const activeId = String(active.id);
+			const overId = String(over.id);
+
+			if (activeId === overId) return;
+
+			// Find source column
+			let sourceColumnId = null;
+
 			for (const colId in tasksByColumn) {
-				if (tasksByColumn[colId].some((task) => String(task.id) === overId)) {
-					targetColumnId = colId;
+				if (tasksByColumn[colId].some((task) => String(task.id) === activeId)) {
+					sourceColumnId = colId;
 					break;
 				}
 			}
-		}
 
-		if (!sourceColumnId || !targetColumnId) return;
+			// Find target column
+			let targetColumnId = null;
 
-		const sourceTasks = [...(tasksByColumn[sourceColumnId] || [])];
-		const targetTasks = [...(tasksByColumn[targetColumnId] || [])];
-		const taskToMove = sourceTasks.find((task) => String(task.id) === activeId);
-		if (!taskToMove) return;
+			if (overId.startsWith('column-')) {
+				targetColumnId = overId.replace('column-', '');
+			} else {
+				for (const colId in tasksByColumn) {
+					if (tasksByColumn[colId].some((task) => String(task.id) === overId)) {
+						targetColumnId = colId;
+						break;
+					}
+				}
+			}
 
-		const isSameColumn = sourceColumnId === targetColumnId;
+			if (!sourceColumnId || !targetColumnId) return;
 
-		if (isSameColumn) {
-			const oldIndex = sourceTasks.findIndex(
-				(task) => String(task.id) === activeId
-			);
-			const newIndex = sourceTasks.findIndex(
-				(task) => String(task.id) === overId
-			);
+			const sourceTasks = [...(tasksByColumn[sourceColumnId] || [])];
+			const targetTasks = [...(tasksByColumn[targetColumnId] || [])];
 
-			if (oldIndex === -1 || newIndex === -1) return;
-
-			const reordered = arrayMove(sourceTasks, oldIndex, newIndex);
-			setTasksByColumn((prev) => ({
-				...prev,
-				[sourceColumnId]: reordered,
-			}));
-
-			// Update task positions in DB
-			const updates = reordered.map((task, index) => ({
-				id: task.id,
-				position: index + 1,
-			}));
-			const { error } = await supabase
-				.from('tasks')
-				.upsert(updates, { onConflict: 'id' });
-			if (error) console.error('Error updating task positions:', error);
-		} else {
-			// Moving task between columns
-			const newSourceTasks = sourceTasks.filter(
-				(task) => String(task.id) !== activeId
+			const taskToMove = sourceTasks.find(
+				(task) => String(task.id) === activeId,
 			);
 
-			const insertIndex = overId.startsWith('column-')
-				? targetTasks.length
-				: targetTasks.findIndex((task) => String(task.id) === overId);
+			if (!taskToMove) return;
 
-			if (insertIndex === -1) return;
+			const isSameColumn = sourceColumnId === targetColumnId;
 
-			const newTargetTasks = [...targetTasks];
-			newTargetTasks.splice(insertIndex, 0, {
-				...taskToMove,
-				column_id: targetColumnId,
-			});
+			// SAME COLUMN
+			if (isSameColumn) {
+				const oldIndex = sourceTasks.findIndex(
+					(task) => String(task.id) === activeId,
+				);
 
-			setTasksByColumn((prev) => ({
-				...prev,
-				[sourceColumnId]: newSourceTasks,
-				[targetColumnId]: newTargetTasks,
-			}));
+				const newIndex = sourceTasks.findIndex(
+					(task) => String(task.id) === overId,
+				);
 
-			// Update task column and positions in DB
-			const updates = newTargetTasks.map((task, index) => ({
-				id: task.id,
-				column_id: task.id === activeId ? targetColumnId : task.column_id,
-				position: index + 1,
-			}));
+				if (oldIndex === -1 || newIndex === -1) return;
 
-			const { error } = await supabase
-				.from('tasks')
-				.upsert(updates, { onConflict: 'id' });
-			if (error)
-				console.error('Error moving task and updating positions:', error);
+				const reordered = arrayMove(sourceTasks, oldIndex, newIndex);
+
+				// Optimistic UI update
+				setTasksByColumn((prev) => ({
+					...prev,
+					[sourceColumnId]: reordered,
+				}));
+
+				// Update DB
+				for (let index = 0; index < reordered.length; index++) {
+					const task = reordered[index];
+
+					const { error } = await supabase
+						.from('tasks')
+						.update({
+							position: index + 1,
+						})
+						.eq('id', task.id);
+
+					if (error) throw error;
+				}
+			}
+
+			// DIFFERENT COLUMN
+			else {
+				const newSourceTasks = sourceTasks.filter(
+					(task) => String(task.id) !== activeId,
+				);
+
+				const insertIndex = overId.startsWith('column-')
+					? targetTasks.length
+					: targetTasks.findIndex((task) => String(task.id) === overId);
+
+				if (insertIndex === -1) return;
+
+				const newTargetTasks = [...targetTasks];
+
+				newTargetTasks.splice(insertIndex, 0, {
+					...taskToMove,
+					column_id: targetColumnId,
+				});
+
+				// Optimistic UI update
+				setTasksByColumn((prev) => ({
+					...prev,
+					[sourceColumnId]: newSourceTasks,
+					[targetColumnId]: newTargetTasks,
+				}));
+
+				// Reindex source column
+				for (let index = 0; index < newSourceTasks.length; index++) {
+					const task = newSourceTasks[index];
+
+					const { error } = await supabase
+						.from('tasks')
+						.update({
+							position: index + 1,
+						})
+						.eq('id', task.id);
+
+					if (error) throw error;
+				}
+
+				// Reindex target column + update moved task column
+				for (let index = 0; index < newTargetTasks.length; index++) {
+					const task = newTargetTasks[index];
+
+					const { error } = await supabase
+						.from('tasks')
+						.update({
+							column_id: task.column_id,
+							position: index + 1,
+						})
+						.eq('id', task.id);
+
+					if (error) throw error;
+				}
+			}
+		} catch (error) {
+			console.error('Drag and drop error:', error);
+
+			// Rollback UI if DB update fails
+			setTasksByColumn(previousState);
 		}
 	}
 
