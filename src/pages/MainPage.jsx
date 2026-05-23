@@ -50,11 +50,11 @@ const MainPage = ({
 					onClick={() => {
 						setIsDropdownOpen(false);
 					}}
-					className='fixed inset-0 bg-[#000000] opacity-50 md:hidden'></div>
+					className='absolute inset-0 bg-[#000000] opacity-50 md:hidden'></div>
 			)}
 			<Button
 				variant='primaryL'
-				className='fixed bottom-10 right-6 flex px-4 py-3'
+				className='absolute bottom-10 right-6 flex px-4 py-3'
 				handleClick={() => logout()}>
 				Logout
 			</Button>
@@ -65,7 +65,7 @@ const MainPage = ({
 						animate={{ x: 0 }}
 						exit={{ x: '-100%' }}
 						transition={{ duration: 0.4 }}
-						className='fixed top-0 left-0 h-full w-[260px] z-45 '>
+						className='absolute top-0 left-0 h-full w-[260px] z-45 '>
 						<BoardsDropdown
 							boards={boards}
 							setActiveBoard={setActiveBoard}
@@ -87,7 +87,7 @@ const MainPage = ({
 			{boards.length > 0 && (
 				<button
 					onClick={() => setIsTabletDropdownOpen(!isDropdownOpen)}
-					className='fixed hidden md:flex justify-center items-center pr-1 bottom-10 bg-purple-main hover:bg-purple-hover w-[56px] h-[48px] rounded-r-3xl transition-all duration-300 cursor-pointer'>
+					className='absolute hidden md:flex justify-center items-center pr-1 bottom-10 bg-purple-main hover:bg-purple-hover w-[56px] h-[48px] rounded-r-3xl transition-all duration-300 cursor-pointer'>
 					<img
 						src='/icon-show-sidebar.svg'
 						alt='show sidebar'
@@ -141,7 +141,7 @@ const MainPage = ({
 										tasksByColumn={tasksByColumn}>
 										<SortableContext
 											items={(tasksByColumn[column.id] || []).map((task) =>
-												String(task.id)
+												String(task.id),
 											)}
 											strategy={verticalListSortingStrategy}>
 											{(tasksByColumn[column.id] || []).map((task) => (

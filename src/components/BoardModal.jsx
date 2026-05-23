@@ -43,12 +43,12 @@ const BoardModal = ({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='fixed inset-0 z-50 flex items-center justify-center'>
+			className='absolute inset-0 z-50 flex items-center justify-center px-6'>
 			<div
 				className='absolute inset-0 bg-[#000000] opacity-50 '
 				onClick={handleClickOutside}></div>
 
-			<div className='z-10 bg-white dark:bg-black-light p-6 w-[90%] md:w-[65%] lg:w-[30%] rounded-md flex flex-col gap-4'>
+			<div className='z-10 bg-white dark:bg-black-light p-6 w-full lg:w-[30%] rounded-md flex flex-col gap-4'>
 				<p className='text-black dark:text-white heading-l'>{title}</p>
 				<div className='flex relative flex-col gap-2'>
 					<span className='text-gray-medium dark:text-white text-xs font-bold'>
