@@ -29,17 +29,6 @@ const BoardModal = ({
 		isEdit && setIsEdit(false);
 		if (error) setError('');
 	};
-
-	// Focus on input field on mount
-	useEffect(() => {
-		inputRef.current.focus();
-	}, []);
-
-	// Focus on last input
-	useEffect(() => {
-		if (columnInputs.length === 0) return;
-		lastInputRef.current.focus();
-	}, [columnInputs.length]);
 	return (
 		<form
 			onSubmit={handleSubmit}
