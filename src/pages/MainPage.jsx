@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import Empty from '../components/Empty';
 import { useContext } from 'react';
-import { DndContext, rectIntersection } from '@dnd-kit/core';
+import { DndContext, closestCorners } from '@dnd-kit/core';
 import {
 	SortableContext,
 	verticalListSortingStrategy,
@@ -130,8 +130,8 @@ const MainPage = ({
 						} transition-all duration-400 `}>
 						<DndContext
 							sensors={sensors}
-							collisionDetection={rectIntersection}
-							onDragOver={handleDragEnd}
+							collisionDetection={closestCorners}
+							onDragEnd={handleDragEnd}
 							autoScroll={true}>
 							<div className='flex gap-6 px-5 pt-4 items-stretch h-full'>
 								{columns.map((column) => (
