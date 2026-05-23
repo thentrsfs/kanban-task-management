@@ -15,7 +15,7 @@ import AuthForm from './components/AuthForm';
 
 function App() {
 	/* Mode */
-	const [theme, setTheme] = useState('dark');
+	const [theme, setTheme] = useState('light');
 
 	/* Context */
 
