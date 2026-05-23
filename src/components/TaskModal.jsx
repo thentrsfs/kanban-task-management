@@ -95,7 +95,7 @@ const TaskModal = ({
 							descriptionErrors
 								? 'border-red hover:border-red'
 								: 'border-gray-border hover:border-purple-main'
-						} py-2 px-4 body-l min-h-[112px] border-1  transition-all duration-300 rounded-sm body-l outline-0 placeholder:text-black-25 dark:placeholder:text-white dark:placeholder:opacity-25 dark:text-white`}
+						} py-2 px-4 body-l min-h-[112px] border-1 text-base transition-all duration-300 rounded-sm body-l outline-0 placeholder:text-black-25 dark:placeholder:text-white dark:placeholder:opacity-25 dark:text-white`}
 						value={taskDescription}
 						onChange={handleTaskDescriptionChange}></textarea>
 					{descriptionErrors && (
