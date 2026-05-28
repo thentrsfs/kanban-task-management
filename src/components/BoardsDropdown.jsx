@@ -35,7 +35,7 @@ const BoardsDropdown = ({
 	};
 
 	return (
-		<div className='absolute md:relative md:left-0 w-[70%] md:w-[260px] m md:translate-0 md:h-screen left-[50%] translate-x-[-50%] top-20 bg-white text-gray-medium z-60 dark:bg-gray-dark md:rounded-none md:border-r md:border-lines-light rounded-lg dark:border-lines-dark '>
+		<div className='absolute md:relative md:left-0 w-[70%] md:w-[260px] m md:translate-0 h-full left-[50%] translate-x-[-50%] bg-white text-gray-medium z-60 dark:bg-gray-dark md:rounded-none md:border-r md:border-lines-light rounded-lg dark:border-lines-dark '>
 			<span className='block px-6 py-4 heading-s '>
 				ALL BOARDS ({boards.length})
 			</span>
