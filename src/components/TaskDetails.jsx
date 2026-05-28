@@ -30,7 +30,7 @@ const TaskDetails = ({
 		setSubtasksByTask((prev) => ({
 			...prev,
 			[subtask.task_id]: prev[subtask.task_id].map((s) =>
-				s.id === subtask.id ? { ...s, is_completed: !s.is_completed } : s
+				s.id === subtask.id ? { ...s, is_completed: !s.is_completed } : s,
 			),
 		}));
 
@@ -147,6 +147,11 @@ const TaskDetails = ({
 						saveGuestBoards={saveGuestBoards}
 					/>
 				</div>
+				<button
+					className=' mt-2 px-5 py-2 bg-purple-main text-white rounded-md heading-m hover:bg-purple-hover transition-all duration-300'
+					onClick={() => setTaskDetailsOpen(false)}>
+					Save Changes
+				</button>
 			</div>
 		</div>
 	);
