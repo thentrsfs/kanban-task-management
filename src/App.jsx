@@ -294,6 +294,8 @@ function App() {
 						logout={logout}
 						columnsLoading={columnsLoading}
 						boardsLoading={boardsLoading}
+						optionsOpen={optionsOpen}
+						openDeleteModal={openDeleteModal}
 					/>
 					{taskModal ? (
 						<TaskModal
