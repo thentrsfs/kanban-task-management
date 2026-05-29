@@ -98,6 +98,7 @@ const TaskDetails = ({
 								onClick={() => {
 									setTaskDeleteModal(true);
 									setTaskDetailsOpen(false);
+									setTaskOptionsOpen(false);
 								}}>
 								Delete Task
 							</button>
