@@ -43,7 +43,7 @@ const MainPage = ({
 
 	return (
 		<div
-			className='relative w-full h-full flex overflow-scroll'
+			className='relative w-full h-full flex z-10 overflow-scroll'
 			onClick={() => setOptionsOpen(false)}>
 			{isDropdownOpen && (
 				<div
